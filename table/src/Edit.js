@@ -14,7 +14,7 @@ export const Edit = () => {
     name: "",
     decription: "",
   });
-  const [con, setCon] = useState(false);
+  // const [con, setCon] = useState(false);
   const id = useParams().id;
   const initData = async () => {
     try {
@@ -60,39 +60,35 @@ export const Edit = () => {
   };
   const handleSubmit = (event) => {
     event.Preventdefault();
-  };
-
-  useEffect(() => {
     putData();
-  }, [con]);
+  };
   // })
   return (
-    <div onSubmit={handleSubmit}>
-      <Form>
+    <div>
+      <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>
-            Name
+            NAME :
           </Form.Label>
-          <Form.Control placeholder={data.name}
+          <h5>{data.name}</h5>
+          <Form.Control
           value={value.name}
-         
           onChange={handleChange}
-          name="name" type="email" />
+          name="name" type="name" />
         </Form.Group>
         <Form.Group>
           <Form.Label>
-            Decription
+            Decription :
           </Form.Label>
-          <Form.Control placeholder={data.decription}
+          <p>{data.decription}</p>
+          <Form.Control
           value={value.decription}
           type="text"
           onChange={handleChange}
           name="decription"   as="textarea" rows={3} />
         </Form.Group>
         <Button type="submit"
-          onSubmit={() => {
-            setCon(true);
-          }} variant="outline-primary">Submit</Button>
+          variant="outline-primary">Change</Button>
       </Form>
     </div>
   );

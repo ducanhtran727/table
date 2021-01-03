@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useRef, useImperativeHandle } from "react";
+import React, { useState, useEffect, useRef, useImperativeHandle ,forwardRef } from "react";
 import axios from "axios";
 import MaterialTable from "material-table";
 import {DataGrid} from '@material-ui/core'
 import {useHistory} from 'react-router-dom';
 import {Route} from "react-router-dom";
 import {Edit} from './Edit';
+import '@material-ui/icons';
 
 const colunms = [
   { title: "Name", field: "name" },
   { title: "Email", field: "email" },
   { title: "Description", field: "body" },
 ];
-
 export const Table = () => {
   const [list, setList] = useState([]);
+  const [toggle,setToggle] = useState(true);
   const initData = async () => {
     try {
       const res = await axios.get(
@@ -27,8 +28,9 @@ export const Table = () => {
   };
   useEffect(() => {
     initData();
-  }, []);
+  }, [toggle]);
   const history = useHistory();
+  console.log(history);
   return (
     <div>
       <MaterialTable
@@ -40,11 +42,21 @@ export const Table = () => {
             icon: "save",
             tooltip: "Save User",
             onClick: (event, rowData) => {
-            alert("You saved " + rowData.id);
+            alert("You update id : " + rowData.id);
             console.log(rowData);
             history.push(`/edit/${rowData.id}`);
             },
           },
+            {
+          icon: 'delete',
+          tooltip: 'Delete User',
+          onClick: (event, rowData) => {
+              alert("You want to delete " + rowData.name)
+              axios.delete(`https://jsonplaceholder.typicode.com/posts/${rowData.id}`);
+              setToggle(!toggle)
+              }
+            }
+          
         ]}
       />
       
